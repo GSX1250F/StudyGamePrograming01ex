@@ -9,8 +9,10 @@ Paddle::Paddle(Game* game) : Actor(game)		//Actorの子クラス
 
 	// パドルの初期情報を設定
 	std::vector<int> color = { 255, 255, 255, 255 };
+	SetPosition(Vector2(10.0f, 384.0f));
 
 	DrawRectComponent* dc = new DrawRectComponent(this, 50);
+
 	dc->SetRects(color, { static_cast<int>(GetPosition().x) , static_cast<int>(GetPosition().y - paddleH / 2),thickness,paddleH});
 }
 
@@ -19,7 +21,7 @@ void Paddle::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	// 速度とデルタタイムに基づいて位置を更新する
 	Vector2 pos = GetPosition();
-	pos.y += mPaddleDir * mSpeed * deltaTime;
+	pos.y += mSpeed * deltaTime;
 	// 位置をスクリーン内に制限する。
 	if (pos.y < (paddleH / 2.0f + thickness))
 	{

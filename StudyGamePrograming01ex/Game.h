@@ -4,7 +4,6 @@
 #include <vector>
 #include "SDL.h"
 
-
 class Game
 {
 public:
@@ -45,10 +44,4 @@ private:
 	bool mIsRunning;
 	// アクターが更新中か
 	bool mUpdatingActors;
-
-
-	// 各アクタークラス
-	class Court* mCourt;		// コート
-	class Paddle* mPaddle;		// パドル
-	//class Ball* Ball;			// ボール
 };

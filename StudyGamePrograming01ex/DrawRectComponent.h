@@ -1,15 +1,15 @@
 #pragma once
 #include <vector>
-#include "SpriteComponent.h"
-class DrawRectComponent : public SpriteComponent
+#include "Component.h"
+class DrawRectComponent : public Component
 {
 public:
 	//長方形を描くコンポーネントのコンストラクタ
 	DrawRectComponent(class Actor* owner, int drawOrder);
-	/// 更新は親からオーバーライドしない。Drawした後は更新しない。
-	//void Update(float deltaTime) override;
-	/// 描画は親からオーバーライドする
-	void Draw(SDL_Renderer* renderer) override;
+	// 更新
+	void Update(float deltaTime);
+	/// 描画
+	void Draw(SDL_Renderer* renderer);
 	// 長方形の色とサイズの設定
 	void SetRects(const std::vector<int>& color, const std::vector<int>& size);
 	

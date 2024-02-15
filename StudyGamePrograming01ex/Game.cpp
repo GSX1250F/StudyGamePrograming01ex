@@ -24,14 +24,14 @@
 #include "SDL_image.h"
 #include <algorithm>
 #include "Actor.h"
-#include "SpriteComponent.h"
+//#include "SpriteComponent.h"
 #include "Random.h"
-#include "Court.h"
-#include "Paddle.h"
-#include "Ball.h"
+//#include "Court.h"
+//#include "Paddle.h"
+//#include "Ball.h"
 
 
-Game::Game()	:mWindow(nullptr),mRenderer(nullptr),mIsRunning(true),mUpdatingActors(false){}
+Game::Game():mWindow(nullptr),mRenderer(nullptr),mIsRunning(true),mUpdatingActors(false){}
 
 bool Game::Initialize()
 {
@@ -175,11 +175,10 @@ void Game::LoadData()
 {
 	//コートを作成
 	mCourt = new Court(this);
-	mCourt->SetPosition(Vector2(0.0f, 0.0f));
+	//mCourt->SetPosition(Vector2(0.0f, 0.0f));
 	
 	//パドルを作成
-	mPaddle = new Paddle(this);
-	mPaddle->SetPosition(Vector2(10.0f, 384.0f));
+	//mPaddle = new Paddle(this);
 
 	//ボールを作成
 	//mBall = new Ball(this);

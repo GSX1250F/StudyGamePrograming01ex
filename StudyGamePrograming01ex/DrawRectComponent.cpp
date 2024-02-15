@@ -1,12 +1,16 @@
 #include "DrawRectComponent.h"
 #include "Actor.h"
+#include "SDL.h"
 
-DrawRectComponent::DrawRectComponent(class Actor* owner, int drawOrder) :SpriteComponent(owner, drawOrder)
+DrawRectComponent::DrawRectComponent(class Actor* owner, int drawOrder) :Component(owner, drawOrder)
 {}
+
+void DrawRectComponent::Update(float deltaTime)
+{
+}
 
 void DrawRectComponent::Draw(SDL_Renderer* renderer)
 {
-	// 各背景テクスチャを描画します
 	for (auto& rc : mRects)
 	{
 		//長方形の色を設定
