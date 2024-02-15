@@ -4,6 +4,7 @@
 #include <vector>
 #include "SDL.h"
 
+
 class Game
 {
 public:
@@ -47,5 +48,7 @@ private:
 
 
 	// 各アクタークラス
-	class Ship* mShip;		// 宇宙船
+	class Court* mCourt;		// コート
+	class Paddle* mPaddle;		// パドル
+	//class Ball* Ball;			// ボール
 };

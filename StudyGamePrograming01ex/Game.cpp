@@ -22,10 +22,14 @@
 
 #include "Game.h"
 #include "SDL_image.h"
-//#include <algorithm>
+#include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
-//#include "Random.h"
+#include "Random.h"
+#include "Court.h"
+#include "Paddle.h"
+#include "Ball.h"
+
 
 Game::Game()	:mWindow(nullptr),mRenderer(nullptr),mIsRunning(true),mUpdatingActors(false){}
 
@@ -92,18 +96,16 @@ void Game::ProcessInput()
 		}
 	}
 
-	const Uint8* keyState = SDL_GetKeyboardState(NULL);
-	if (keyState[SDL_SCANCODE_ESCAPE])
+	const Uint8* KeyState = SDL_GetKeyboardState(NULL);
+	if (KeyState[SDL_SCANCODE_ESCAPE])
 	{
 		mIsRunning = false;
 	}
 
-	mUpdatingActors = true;
-	for (auto actor : mActors)
-	{
-		actor->ProcessInput(keyState);
-	}
-	mUpdatingActors = false;
+	// パドルの操作
+	mPaddle->ProcessKeyboard(KeyState);
+
+
 }
 
 void Game::UpdateGame()
@@ -155,7 +157,9 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-	SDL_SetRenderDrawColor(mRenderer, 220, 220, 220, 255);
+	// 背景の色を設定
+	SDL_SetRenderDrawColor(mRenderer, 50, 50, 50, 255);
+	// 背景を単色でクリア
 	SDL_RenderClear(mRenderer);
 
 	// すべてのスプライトコンポーネントを描画
@@ -169,19 +173,27 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	//プレイヤーの宇宙船を作成
-	mShip = new Ship(this);
-	mShip->SetPosition(Vector2(512.0f, 384.0f));
-	mShip->SetRotation(Math::PiOver2);
+	//コートを作成
+	mCourt = new Court(this);
+	mCourt->SetPosition(Vector2(0.0f, 0.0f));
+	
+	//パドルを作成
+	mPaddle = new Paddle(this);
+	mPaddle->SetPosition(Vector2(10.0f, 384.0f));
+
+	//ボールを作成
+	//mBall = new Ball(this);
+	//mBall->SetPosition(Vector2(514.0f, 384.0f));
 
 
+	/*
 	// 小惑星を生成
 	const int numAsteroids = 20;
 	for (int i = 0; i < numAsteroids; i++)
 	{
 		new Asteroid(this);
 	}
-
+	*/
 }
 
 void Game::UnloadData()

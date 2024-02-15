@@ -139,10 +139,12 @@ xcopy "..\..\external\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutDir)" /i/s/y
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Court.cpp" />
+    <ClCompile Include="DrawRectComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +152,11 @@ xcopy "..\..\external\SDL2_image\lib\$(PlatformTarget)\*.dll" "$(OutDir)" /i/s/y
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Court.h" />
+    <ClInclude Include="DrawRectComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Paddle.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="SpriteComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
