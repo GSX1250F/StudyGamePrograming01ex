@@ -1,16 +1,26 @@
 #include "Court.h"
-#include "DrawRectComponent.h"
 #include "Game.h"
+#include "RectSpriteComponent.h"
 
-Court::Court(Game* game) : Actor(game)		//Actorの子クラス
+Court::Court(Game* game) : Actor(game)
 {
-	// 壁の情報を設定
-	std::vector<int> color = { 255, 255, 255, 255 };
+	thickness = 15;
 	
-
-	DrawRectComponent* dc = new DrawRectComponent(this, 10);
-	dc->SetRects(color, { 0,0,1024,thickness });	//上側の壁
-	dc->SetRects(color, { 0,768-thickness,1024,thickness });	//下側の壁
-	dc->SetRects(color, { 1024-thickness,0,thickness,1024 });	//右側の壁
+	// 長方形の描画コンポーネントを作成
+	RectSpriteComponent* rsc = new RectSpriteComponent(this);
+	
+	int color[4] = { 200, 200, 200, 255};
+	
+	// 上壁
+	int size[4] = { 0, 0, 1024, thickness};
+	rsc->SetSomeRects(color, size);
+	// 下壁
+	size[1] = 768 - thickness;
+	rsc->SetSomeRects(color, size);
+	// 右壁
+	size[0] = 1024 - thickness;
+	size[1] = 0;
+	size[2] = thickness;
+	size[3] = 1024;
+	rsc->SetSomeRects(color, size);
 }
-

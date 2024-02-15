@@ -27,11 +27,15 @@
 #include "SpriteComponent.h"
 #include "Random.h"
 #include "Court.h"
-#include "Paddle.h"
-#include "Ball.h"
 
-
-Game::Game()	:mWindow(nullptr),mRenderer(nullptr),mIsRunning(true),mUpdatingActors(false){}
+Game::Game()
+{
+	mWindow = nullptr;
+	mRenderer = nullptr;
+	mTicksCount = 0;
+	mIsRunning = true;
+	mIsUpdatingActors = false;
+}
 
 bool Game::Initialize()
 {
@@ -42,7 +46,7 @@ bool Game::Initialize()
 		return false;
 	}
 	// SDLウィンドウを作成
-	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter1 ex)", 100, 100, 1024, 768, 0);
+	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 1ex)", 100, 100, 1024, 768, 0);
 	if (!mWindow)
 	{
 		SDL_Log("ウィンドウの作成に失敗しました: %s", SDL_GetError());
@@ -62,14 +66,12 @@ bool Game::Initialize()
 		return false;
 	}
 
-	//Random::Init();
-
+	// スプライトや背景などのデータを読み込み
 	LoadData();
 
 	mTicksCount = SDL_GetTicks();
 
 	return true;
-
 }
 
 void Game::RunLoop()
@@ -85,7 +87,7 @@ void Game::RunLoop()
 void Game::ProcessInput()
 {
 	SDL_Event event;
-	// キューにイベントがあれば繰り返す
+	// SDLイベントにキューがある間は入力を受け付けない。
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -96,42 +98,43 @@ void Game::ProcessInput()
 		}
 	}
 
-	const Uint8* KeyState = SDL_GetKeyboardState(NULL);
-	if (KeyState[SDL_SCANCODE_ESCAPE])
+	// キーボード入力の受付
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+
+	// ESCが押されたとき→Shutdown
+	if (state[SDL_SCANCODE_ESCAPE])
 	{
 		mIsRunning = false;
 	}
 
 	// パドルの操作
-	mPaddle->ProcessKeyboard(KeyState);
-
-
+	// mPaddle->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame()
 {
-	// デルタタイムの計算
-	// 前のフレームから 16ms 経つまで待つ
+	// 60fpsにするために遅延
 	while (!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
 
+	// deltatimeは前のフレームとの時刻の差を秒に変換した値
 	float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
 
-	// デルタタイムを最大値で制限する
+	//deltatimeを最大値で制限する
 	if (deltaTime > 0.05f)
 	{
 		deltaTime = 0.05f;
 	}
 	mTicksCount = SDL_GetTicks();
 
-	// すべてのアクターを更新
-	mUpdatingActors = true;
+	// アクターを更新
+	mIsUpdatingActors = true;
 	for (auto actor : mActors)
 	{
 		actor->Update(deltaTime);
 	}
-	mUpdatingActors = false;
+	mIsUpdatingActors = false;
 
-	// 待ちアクターをmActorsに移動
+	// 待ちになっていたアクターをmActorsに移動
 	for (auto pending : mPendingActors)
 	{
 		mActors.emplace_back(pending);
@@ -157,55 +160,45 @@ void Game::UpdateGame()
 
 void Game::GenerateOutput()
 {
-	// 背景の色を設定
-	SDL_SetRenderDrawColor(mRenderer, 50, 50, 50, 255);
-	// 背景を単色でクリア
+	// バックバッファ(ゲームのカレントバッファ)を単色でクリアする
+	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
+	// バックバッファを現在の描画色でクリアする
 	SDL_RenderClear(mRenderer);
 
-	// すべてのスプライトコンポーネントを描画
+	// 全てのスプライトコンポーネントを描画
 	for (auto sprite : mSprites)
 	{
 		sprite->Draw(mRenderer);
 	}
-
+	// フロントバッファとバックバッファを交換する
 	SDL_RenderPresent(mRenderer);
 }
 
 void Game::LoadData()
 {
-	//コートを作成
+	// コートを作成
 	mCourt = new Court(this);
-	mCourt->SetPosition(Vector2(0.0f, 0.0f));
-	
-	//パドルを作成
-	mPaddle = new Paddle(this);
-	mPaddle->SetPosition(Vector2(10.0f, 384.0f));
-
-	//ボールを作成
-	//mBall = new Ball(this);
-	//mBall->SetPosition(Vector2(514.0f, 384.0f));
-
 
 	/*
-	// 小惑星を生成
-	const int numAsteroids = 20;
-	for (int i = 0; i < numAsteroids; i++)
-	{
-		new Asteroid(this);
-	}
+	// プレイヤーであるキャラクターを作成
+	mCharacter = new Character(this);
+	mCharacter->SetPosition(Vector2(100.0f, 384.0f));
+	mCharacter->SetScale(1.5f);
 	*/
+
+
 }
 
 void Game::UnloadData()
 {
-	// アクターを消去
-	// Because ~Actor calls RemoveActor, have to use a different style loop
+	// actorsを消去
+	// ~ActorではRemoveActorが呼び出されるので、別の種類のループを使う
 	while (!mActors.empty())
 	{
 		delete mActors.back();
 	}
 
-	// テクスチャを消去
+	// Destroy textures
 	for (auto i : mTextures)
 	{
 		SDL_DestroyTexture(i.second);
@@ -213,11 +206,11 @@ void Game::UnloadData()
 	mTextures.clear();
 }
 
-SDL_Texture* Game::GetTexture(const std::string& filename)
+SDL_Texture* Game::GetTexture(const std::string& fileName)
 {
 	SDL_Texture* tex = nullptr;
-
-	auto iter = mTextures.find(filename);
+	// テクスチャがすでにマップに入っているのか？
+	auto iter = mTextures.find(fileName);
 	if (iter != mTextures.end())
 	{
 		tex = iter->second;
@@ -225,23 +218,24 @@ SDL_Texture* Game::GetTexture(const std::string& filename)
 	else
 	{
 		// ファイルからロード
-		SDL_Surface* surf = IMG_Load(filename.c_str());
+		SDL_Surface* surf = IMG_Load(fileName.c_str());
 		if (!surf)
 		{
-			SDL_Log("Failed to load texture file %s", filename.c_str());
+			SDL_Log("テクスチャファイルのロードに失敗 %s", fileName.c_str());
 			return nullptr;
 		}
 
 		// サーフェイスからテクスチャを作成
 		tex = SDL_CreateTextureFromSurface(mRenderer, surf);
+		// サーフェイスを消去
 		SDL_FreeSurface(surf);
 		if (!tex)
 		{
-			SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
+			SDL_Log("テクスチャへの変換に失敗 %s", fileName.c_str());
 			return nullptr;
 		}
-
-		mTextures.emplace(filename.c_str(), tex);
+		// mTexturesに作成したテクスチャを追加
+		mTextures.emplace(fileName.c_str(), tex);
 	}
 	return tex;
 }
@@ -257,8 +251,8 @@ void Game::Shutdown()
 
 void Game::AddActor(Actor* actor)
 {
-	// If we're updating actors, need to add to pending
-	if (mUpdatingActors)
+	// アクターの更新中ならmPendingActorsに追加
+	if (mIsUpdatingActors)
 	{
 		mPendingActors.emplace_back(actor);
 	}
@@ -270,20 +264,22 @@ void Game::AddActor(Actor* actor)
 
 void Game::RemoveActor(Actor* actor)
 {
-	// Is it in pending actors?
+	// mPendingActorsのvectorからactorを検索し、該当するイテレータを返す
+	// actorが見つからない場合は最後のイテレータを返す
 	auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
 	if (iter != mPendingActors.end())
 	{
-		// Swap to end of vector and pop off (avoid erase copies)
+		// 該当のイテレータをmPendingActorsの一番最後に移動し、popする
 		std::iter_swap(iter, mPendingActors.end() - 1);
 		mPendingActors.pop_back();
 	}
 
-	// Is it in actors?
+	// mActorsのvectorからactorを検索し、該当するイテレータを返す
+	// actorが見つからない場合は最後のイテレータを返す
 	iter = std::find(mActors.begin(), mActors.end(), actor);
 	if (iter != mActors.end())
 	{
-		// Swap to end of vector and pop off (avoid erase copies)
+		// 該当のイテレータをmPendingActorsの一番最後に移動し、popする
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
@@ -291,8 +287,7 @@ void Game::RemoveActor(Actor* actor)
 
 void Game::AddSprite(SpriteComponent* sprite)
 {
-	// Find the insertion point in the sorted vector
-	// (The first element with a higher draw order than me)
+	// ソート済みの配列で挿入点を見つける
 	int myDrawOrder = sprite->GetDrawOrder();
 	auto iter = mSprites.begin();
 	for (;
@@ -305,7 +300,7 @@ void Game::AddSprite(SpriteComponent* sprite)
 		}
 	}
 
-	// Inserts element before position of iterator
+	// イテレータの位置の前に要素を挿入する
 	mSprites.insert(iter, sprite);
 }
 

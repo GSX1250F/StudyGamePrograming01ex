@@ -1,9 +1,8 @@
 #pragma once
-#include <string>
-#include <unordered_map>
-#include <vector>
 #include "SDL.h"
-
+#include <unordered_map>
+#include <string>
+#include <vector>
 
 class Game
 {
@@ -20,7 +19,6 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 
 	SDL_Texture* GetTexture(const std::string& fileName);
-
 private:
 	void ProcessInput();
 	void UpdateGame();
@@ -31,12 +29,12 @@ private:
 	// テクスチャの配列
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
-	// すべてのアクター
+	// ゲーム上の全てのアクター
 	std::vector<class Actor*> mActors;
-	// すべての待ちアクター
+	// 待ち状態のアクター
 	std::vector<class Actor*> mPendingActors;
 
-	// すべての描画されるスプライトコンポーネント
+	// 全てのスプライトコンポーネントの配列
 	std::vector<class SpriteComponent*> mSprites;
 
 	SDL_Window* mWindow;
@@ -44,11 +42,8 @@ private:
 	Uint32 mTicksCount;
 	bool mIsRunning;
 	// アクターが更新中か
-	bool mUpdatingActors;
-
-
-	// 各アクタークラス
-	class Court* mCourt;		// コート
-	class Paddle* mPaddle;		// パドル
-	//class Ball* Ball;			// ボール
+	bool mIsUpdatingActors;
+	
+	//各アクターの宣言
+	class Court* mCourt;
 };
