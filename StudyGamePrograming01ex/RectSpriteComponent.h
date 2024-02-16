@@ -1,31 +1,24 @@
 #pragma once
 #include "SpriteComponent.h"
 #include <vector>
+#include "Math.h"
+
 class RectSpriteComponent : public SpriteComponent
 {
 public:
-	RectSpriteComponent(class Actor* owner, int drawOrder = 100);
-	// フレームごとにアニメーションを更新する(componentからオーバーライド)
-	// void Update(float deltaTime) override;
-	// 描画（spliteComponentからオーバーライド）
-	void Draw(SDL_Renderer* renderer);
-	// 色と大きさのセット
-	void SetRectInfo(int color[4],int size[4]);
-	// 複数の長方形の構造体の設定
-	void SetSomeRects(int color[4], int size[4]);
+	// 背景のコンストラクタ。指定されない場合の描画順序の初期値は10とする(早く描画されることで背景となる)
+	RectSpriteComponent(class Actor* owner, int drawOrder = 10);
+	// 更新は親からオーバーライドする。スクロールを設定するため
+	void Update(float deltaTime) override;
+	// 描画は親からオーバーライドする。画面の大きさに置くため。
+	void Draw(SDL_Renderer* renderer) override;
+	// Rectの色とサイズの設定
+	void SetRectColor(const std::vector<int>& rectcolor);
+	void SetRectSize(const std::vector<int>& rectsize);
+
 
 private:
-	// 色の設定のための変数
-	int mColor[4];
-	// 長方形設定のための変数
-	int mSize[4];
-
-	// 複数の長方形をカプセル化する構造体
-	struct SomeRects
-	{
-		int mColor[4];
-		int mSize[4];
-	};
-	std::vector<SomeRects> mSomeRects;
+	std::vector<int> mColor;
+	std::vector<int> mSize;
 };
 

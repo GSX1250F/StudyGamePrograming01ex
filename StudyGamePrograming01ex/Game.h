@@ -43,7 +43,7 @@ private:
 	bool mIsRunning;
 	// アクターが更新中か
 	bool mIsUpdatingActors;
-	
-	//各アクターの宣言
-	class Court* mCourt;
+
+	class Ship* mShip; // 宇宙船
+	class Character* mCharacter; // 人
 };

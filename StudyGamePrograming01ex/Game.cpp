@@ -1,40 +1,17 @@
-// Game.cppがやること
-// 0.コンストラクタ
-//		mWindow:ゲーム画面　　mRenderer:レンダラー		mIsRunning:ループの判断		mUpdatingActors:アクター更新中の判断
-// 1.Initialize: SDL関係、Actor読み込み、TicksCount開始
-//		1.1LoadData : Actorのインスタンス・位置初期設定
-// 2.RunLoop: 入力受付→更新→出力　のループ
-//		2.1 ProcessInput: SDLイベントループ、入力情報を全アクターのProcessInputに与える
-//		2.2 UpdateGame: FPSの調整、deltatTimeを全アクターのUpdateに与える、死んだアクターの削除
-//		2.3 GenerateOutput: レンダラーのベースカラー設定・クリア、全ての描画対象を描画、描画バッファの交換
-//			描画対象は、スプライトの場合は全スプライトクラスのDrawにレンダラー情報を与える
-// 3.Shutdown: メモリ解放
-
-// AddActor ※AddShip・AddBallなどはActorの子クラスのAddもある：mActorsかmPendingActorsの配列にActorを追加
-// Actorのコンストラクタから引数を通して呼び出し
-
-// AddSprite: スプライト毎に設定されているDrawOrderを取得し、mSprites配列に描画順でスプライトを追加
-// ActorのコンストラクタからSpriteComponentを引数を通して呼び出し
-
-// SDL_Texture* Game::GetTexture :スプライトに使用する画像ファイルをテクスチャにするための関数
-// Actor側から呼び出すこともあるし、背景用はこのGame.cppで呼び出すこともある。
-
-
 #include "Game.h"
 #include "SDL_image.h"
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
-#include "Random.h"
-#include "Court.h"
+//#include "RectSpriteComponent.h"
 
 Game::Game()
+	:mWindow(nullptr)
+	, mRenderer(nullptr)
+	, mIsRunning(true)
+	, mIsUpdatingActors(false)
 {
-	mWindow = nullptr;
-	mRenderer = nullptr;
-	mTicksCount = 0;
-	mIsRunning = true;
-	mIsUpdatingActors = false;
+
 }
 
 bool Game::Initialize()
@@ -46,7 +23,7 @@ bool Game::Initialize()
 		return false;
 	}
 	// SDLウィンドウを作成
-	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 1ex)", 100, 100, 1024, 768, 0);
+	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 2)", 100, 100, 1024, 768, 0);
 	if (!mWindow)
 	{
 		SDL_Log("ウィンドウの作成に失敗しました: %s", SDL_GetError());
@@ -107,8 +84,13 @@ void Game::ProcessInput()
 		mIsRunning = false;
 	}
 
-	// パドルの操作
-	// mPaddle->ProcessKeyboard(state);
+	// 宇宙船の操作
+	//mShip->ProcessKeyboard(state);
+
+	/*
+	// 人の操作
+	mCharacter->ProcessKeyboard(state);
+	*/
 }
 
 void Game::UpdateGame()
@@ -176,17 +158,23 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	// コートを作成
-	mCourt = new Court(this);
+
 
 	/*
-	// プレイヤーであるキャラクターを作成
-	mCharacter = new Character(this);
-	mCharacter->SetPosition(Vector2(100.0f, 384.0f));
-	mCharacter->SetScale(1.5f);
+	// 背景用アクターを作る
+	Actor* bgactors = new Actor(this);
+	bgactors->SetPosition(Vector2(512.0f, 384.0f));
+
+	// 一番後ろの背景を作成
+	BGSpriteComponent* bg = new BGSpriteComponent(bgactors, 10);		//描画順序の初期値を省略も可能。
+	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+	std::vector<SDL_Texture*> bgtexs = {
+		GetTexture("Assets/Farback01.png")
+		,GetTexture("Assets/Farback02.png")
+	};
+	bg->SetBGTextures(bgtexs);
+	bg->SetScrollSpeed(-10.0f);
 	*/
-
-
 }
 
 void Game::UnloadData()
