@@ -27,6 +27,7 @@
 #include "SpriteComponent.h"
 #include "Random.h"
 #include "Court.h"
+#include "DrawRectComponent.h"
 //#include "Paddle.h"
 //#include "Ball.h"
 
@@ -174,8 +175,8 @@ void Game::GenerateOutput()
 void Game::LoadData()
 {
 	//コートを作成
-	Court* mCourt;
-	mCourt = new Court(this);
+	Actor* mCourt = new Actor(this);
+	DrawRectComponent* drc = new DrawRectComponent(mCourt, 10);
 	//mCourt->SetPosition(Vector2(0.0f, 0.0f));
 	
 	//パドルを作成
@@ -287,28 +288,6 @@ void Game::RemoveActor(Actor* actor)
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
-}
-
-void Game::AddRect(DrawRectComponent* rect)
-{
-	// Find the insertion point in the sorted vector
-	// (The first element with a higher draw order than me)
-	int myDrawOrder = rect->GetDrawOrder();
-	auto iter = mSprites.begin();
-	for (;
-		iter != mSprites.end();
-		++iter)
-	{
-		if (myDrawOrder < (*iter)->GetDrawOrder())
-		{
-			break;
-		}
-	}
-
-	// Inserts element before position of iterator
-	mSprites.insert(iter, sprite);
-}
-
 }
 
 void Game::AddSprite(SpriteComponent* sprite)

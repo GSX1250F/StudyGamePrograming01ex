@@ -1,9 +1,9 @@
 #include "DrawRectComponent.h"
 #include "Actor.h"
-#include "SDL.h"
 
-DrawRectComponent::DrawRectComponent(class Actor* owner, int drawOrder) :Component(owner, drawOrder)
-{}
+DrawRectComponent::DrawRectComponent(class Actor* owner, int drawOrder) :SpriteComponent(owner, drawOrder)
+{
+}
 
 void DrawRectComponent::Update(float deltaTime)
 {
@@ -36,12 +36,3 @@ void DrawRectComponent::SetRects(const std::vector<int>& color, const std::vecto
 	mRects.emplace_back(temp);
 }
 
-std::vector<int> DrawRectComponent::GetRectsColor(struct Rects rects)
-{
-	return std::vector<int>(rects.mColor2);
-}
-
-std::vector<int> DrawRectComponent::GetRectsSize(struct Rects rects)
-{
-	return std::vector<int>();
-}

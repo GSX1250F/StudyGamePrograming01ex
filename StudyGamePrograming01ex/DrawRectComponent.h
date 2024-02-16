@@ -1,23 +1,20 @@
 #pragma once
 #include <vector>
-#include "Component.h"
-#include "SDL.h"
+#include "SpriteComponent.h"
+#include "Math.h"
 
-class DrawRectComponent : public Component
+class DrawRectComponent : public SpriteComponent
 {
 public:
 	//長方形を描くコンポーネントのコンストラクタ
-	DrawRectComponent(class Actor* owner, int drawOrder);
-	// 更新
-	virtual void Update(float deltaTime);
-	/// 描画
-	virtual void Draw(SDL_Renderer* renderer);
-	// 長方形の色とサイズの設定/取得
+	DrawRectComponent(class Actor* owner, int drawOrder = 10);
+	// 更新オーバーライド
+	void Update(float deltaTime) override;
+	/// 描画 オーバーライド
+	void Draw(SDL_Renderer* renderer) override;
+	// 長方形の色とサイズの設定
 	void SetRects(const std::vector<int>& color, const std::vector<int>& size);
-	std::vector<int> GetRectsColor(std::vector<Rects>& rects);
-	std::vector<int> GetRectsSize(std::vector<Rects>& rects);
 	
-
 
 private:
 	std::vector<int> mColor;
