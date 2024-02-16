@@ -35,3 +35,13 @@ void DrawRectComponent::SetRects(const std::vector<int>& color, const std::vecto
 	temp.mSize2 = size;
 	mRects.emplace_back(temp);
 }
+
+std::vector<int> DrawRectComponent::GetRectsColor(struct Rects rects)
+{
+	return std::vector<int>(rects.mColor2);
+}
+
+std::vector<int> DrawRectComponent::GetRectsSize(struct Rects rects)
+{
+	return std::vector<int>();
+}

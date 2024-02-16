@@ -12,9 +12,12 @@ public:
 	virtual void Update(float deltaTime);
 	/// 描画
 	virtual void Draw(SDL_Renderer* renderer);
-	// 長方形の色とサイズの設定
+	// 長方形の色とサイズの設定/取得
 	void SetRects(const std::vector<int>& color, const std::vector<int>& size);
+	std::vector<int> GetRectsColor(std::vector<Rects>& rects);
+	std::vector<int> GetRectsSize(std::vector<Rects>& rects);
 	
+
 
 private:
 	std::vector<int> mColor;
