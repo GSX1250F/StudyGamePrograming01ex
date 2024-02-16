@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
-#include "RectSpriteComponent.h"
+//#include "RectSpriteComponent.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -159,6 +159,8 @@ void Game::GenerateOutput()
 void Game::LoadData()
 {
 
+
+	/*
 	// 背景用アクターを作る
 	Actor* bgactors = new Actor(this);
 	bgactors->SetPosition(Vector2(512.0f, 384.0f));
@@ -172,7 +174,7 @@ void Game::LoadData()
 	};
 	bg->SetBGTextures(bgtexs);
 	bg->SetScrollSpeed(-10.0f);
-
+	*/
 }
 
 void Game::UnloadData()
