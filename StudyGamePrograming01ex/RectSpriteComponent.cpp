@@ -3,6 +3,11 @@
 
 RectSpriteComponent::RectSpriteComponent(class Actor* owner, int drawOrder) : SpriteComponent(owner, drawOrder)
 {
+
+}
+
+RectSpriteComponent::~RectSpriteComponent()
+{
 }
 
 void RectSpriteComponent::Update(float deltaTime)
@@ -12,23 +17,28 @@ void RectSpriteComponent::Update(float deltaTime)
 
 void RectSpriteComponent::Draw(SDL_Renderer* renderer)
 {
+	SDL_SetRenderDrawColor(renderer, RectColor[0], RectColor[1], RectColor[2], RectColor[3]);
+
 	SDL_Rect r;
-	// 画面サイズのサイズを想定
-	// 所有者の位置を中心に長方形を配置します
-	//r.x = static_cast<int>();
-	//r.y = static_cast<int>();
-	//r.w = static_cast<int>();
-	//r.h = static_cast<int>();
+	r.x = static_cast<int>(mOwner->GetPosition().x - mTexWidth / 2 );
+	r.y = static_cast<int>(mOwner->GetPosition().y - mTexHeight / 2 );
+	r.w = mTexWidth;
+	r.h = mTexHeight;
 
-	// 描画
+	//作成した長方形を描画（塗りつぶし）
+	SDL_RenderFillRect(renderer, &r);
+
 }
 
-void RectSpriteComponent::SetRectColor(const std::vector<int>& rectcolor)
+
+
+void RectSpriteComponent::SetRectColor(int rectcolor[4])
 {
-	mColor = rectcolor;
+	for (int i = 0; i < 4; i++) { RectColor[i] = rectcolor[i]; }
 }
 
-void RectSpriteComponent::SetRectSize(const std::vector<int>& rectsize)
+void RectSpriteComponent::SetRectSize(int rectWH[2])
 {
-	mSize = rectsize;
+	mTexWidth = rectWH[0];
+	mTexHeight = rectWH[1];
 }

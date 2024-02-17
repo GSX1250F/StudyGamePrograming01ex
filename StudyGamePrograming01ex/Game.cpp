@@ -3,16 +3,14 @@
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
-//#include "RectSpriteComponent.h"
 
 Game::Game()
 	:mWindow(nullptr)
 	, mRenderer(nullptr)
 	, mIsRunning(true)
 	, mIsUpdatingActors(false)
-{
-
-}
+	, mTicksCount(0)
+{}
 
 bool Game::Initialize()
 {
@@ -86,12 +84,8 @@ void Game::ProcessInput()
 
 	// ‰F’ˆ‘D‚Ì‘€ì
 	//mShip->ProcessKeyboard(state);
-
-	/*
-	// l‚Ì‘€ì
-	mCharacter->ProcessKeyboard(state);
-	*/
 }
+	
 
 void Game::UpdateGame()
 {
@@ -158,23 +152,9 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
+	mCourt = new Court(this);
 
 
-	/*
-	// ”wŒi—pƒAƒNƒ^[‚ðì‚é
-	Actor* bgactors = new Actor(this);
-	bgactors->SetPosition(Vector2(512.0f, 384.0f));
-
-	// ˆê”ÔŒã‚ë‚Ì”wŒi‚ðì¬
-	BGSpriteComponent* bg = new BGSpriteComponent(bgactors, 10);		//•`‰æ‡˜‚Ì‰Šú’l‚ðÈ—ª‚à‰Â”\B
-	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
-	std::vector<SDL_Texture*> bgtexs = {
-		GetTexture("Assets/Farback01.png")
-		,GetTexture("Assets/Farback02.png")
-	};
-	bg->SetBGTextures(bgtexs);
-	bg->SetScrollSpeed(-10.0f);
-	*/
 }
 
 void Game::UnloadData()

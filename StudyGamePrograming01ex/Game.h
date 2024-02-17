@@ -3,6 +3,9 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include "Actor.h"
+#include "SpriteComponent.h"
+#include "Court.h"
 
 class Game
 {
@@ -44,6 +47,7 @@ private:
 	// アクターが更新中か
 	bool mIsUpdatingActors;
 
-	class Ship* mShip; // 宇宙船
-	class Character* mCharacter; // 人
+	// オリジナルの動作をするアクターの宣言
+	class Court* mCourt;
+	
 };

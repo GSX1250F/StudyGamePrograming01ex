@@ -17,4 +17,6 @@ protected:
 	class Actor* mOwner;
 	// コンポーネントの更新順序
 	int mUpdateOrder;
+
+
 };
