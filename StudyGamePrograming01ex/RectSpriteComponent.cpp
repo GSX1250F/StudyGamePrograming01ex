@@ -17,6 +17,10 @@ RectSpriteComponent::~RectSpriteComponent()
 void RectSpriteComponent::Update(float deltaTime)
 {
 	SpriteComponent::Update(deltaTime);
+	for (auto& rectinfos : mRectInfos)
+	{
+		
+	}
 }
 
 void RectSpriteComponent::Draw(SDL_Renderer* renderer)

@@ -7,6 +7,7 @@ class Court : public Actor
 public:
 	Court(class Game* game);
 	~Court() {};
+
 private:
 	int thickness;
 	int mColor[4];
