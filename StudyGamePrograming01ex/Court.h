@@ -10,6 +10,6 @@ public:
 private:
 	int thickness;
 	int mColor[4];
-	int mWH[2];
+	int mSize[4];
 };
 

@@ -9,16 +9,45 @@ Court::Court(Game* game) : Actor(game)
 	mColor[2] = 200;	//B
 	mColor[3] = 255;	//A
 	
+
+
 	//右壁
-	SetPosition(Vector2(1024.0f - thickness / 2.0f, 768.0f / 2.0f));
-	mWH[0] = thickness;
-	mWH[1] = 768;
+	mSize[0] = 1024 - thickness;	//x
+	mSize[1] = 0;	//y
+	mSize[2] = thickness;	//width
+	mSize[3] = 768;		//height
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	RectSpriteComponent* rsc = new RectSpriteComponent(this);
 
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mWH);
+	rsc->SetRectSize(mSize);
+	rsc->SetRectInfos();
 
+	//上壁
+	mSize[0] = 0;	//x
+	mSize[1] = 0;	//y
+	mSize[2] = 1024;	//width
+	mSize[3] = thickness;		//height
+
+	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
+	rsc = new RectSpriteComponent(this);
+
+	rsc->SetRectColor(mColor);
+	rsc->SetRectSize(mSize);
+	rsc->SetRectInfos();
+
+	//下壁
+	mSize[0] = 0;	//x
+	mSize[1] = 768 - thickness;	//y
+	mSize[2] = 1024;	//width
+	mSize[3] = thickness;		//height
+
+	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
+	rsc = new RectSpriteComponent(this);
+
+	rsc->SetRectColor(mColor);
+	rsc->SetRectSize(mSize);
+	rsc->SetRectInfos();
 }
 

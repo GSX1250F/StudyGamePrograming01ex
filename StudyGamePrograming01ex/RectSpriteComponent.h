@@ -16,10 +16,19 @@ public:
 	void Draw(SDL_Renderer* renderer) override;
 	// Rectの色とサイズの設定
 	void SetRectColor(int rectcolor[4]);
-	void SetRectSize(int WH[2]);
-
+	void SetRectSize(int rectsize[4]);
+	
+	// 複数のRectを配列に入れる関数
+	void SetRectInfos();
 
 private:
-	int RectColor[4];
-
+	int mRectColor[4];
+	int mRectSize[4];
+	// 複数のRectの情報をカプセル化する配列
+	struct RectInfo
+	{
+		int mRectColor[4];
+		int mRectSize[4];
+	};
+	std::vector<RectInfo> mRectInfos;
 };
