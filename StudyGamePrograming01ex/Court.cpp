@@ -17,5 +17,8 @@ Court::Court(Game* game) : Actor(game)
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	RectSpriteComponent* rsc = new RectSpriteComponent(this);
 
+	rsc->SetRectColor(mColor);
+	rsc->SetRectSize(mWH);
+
 }
 

@@ -16,7 +16,7 @@ public:
 	void Draw(SDL_Renderer* renderer) override;
 	// Rectの色とサイズの設定
 	void SetRectColor(int rectcolor[4]);
-	void SetRectSize(int rectsize[4]);
+	void SetRectSize(int WH[2]);
 
 
 private:
