@@ -47,7 +47,4 @@ private:
 	// アクターが更新中か
 	bool mIsUpdatingActors;
 
-	// オリジナルの動作をするアクターの宣言
-	class Court* mCourt;
-	
 };

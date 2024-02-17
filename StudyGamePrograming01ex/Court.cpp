@@ -12,12 +12,10 @@ Court::Court(Game* game) : Actor(game)
 	//右壁
 	SetPosition(Vector2(1024.0f - thickness / 2.0f, 768.0f / 2.0f));
 	mWH[0] = thickness;
-	mWH[1] = 768.0f;
+	mWH[1] = 768;
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	RectSpriteComponent* rsc = new RectSpriteComponent(this);
-	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mWH);
 
 }
 

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "Court.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -152,6 +153,7 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
+	Court* mCourt;
 	mCourt = new Court(this);
 
 
