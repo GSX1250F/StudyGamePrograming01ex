@@ -3,31 +3,15 @@
 
 Paddle::Paddle(Game* game) : Actor(game)
 {
-	PaddleH = 200;
-	PaddleSpeed = 300;
-	PaddleDir = 0;
-
-	thickness = 15;		//厚さ
-	//色
-	mColor[0] = 200;	//R
-	mColor[1] = 200;	//G
-	mColor[2] = 200;	//B
-	mColor[3] = 255;	//A
+	SetPosition(Vector2( 3 * thickness , 768 / 2));	//位置は中心
 
 	//左パドル
-	mSize[0] = thickness + 10;	//x
-	mSize[1] = static_cast<int>(384 + PaddleH/2);	//y
-	mSize[2] = thickness;		//width
-	mSize[3] = PaddleH;			//height
-
+	mOffset.x = static_cast<int>(-thickness / 2);
+	mOffset.y = static_cast<int>(-PaddleH / 2);
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	RectSpriteComponent* rsc = new RectSpriteComponent(this);
-
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mSize);
-	rsc->SetRectInfos();
-
-	SetPosition(Vector2(thickness + 10 , 384 ));
+	rsc->SetRectSize(mOffset, thickness, PaddleH);
 
 }
 
@@ -49,8 +33,6 @@ void Paddle::UpdateActor(float deltaTime)
 		pos.y = 768 - thickness - PaddleH / 2;
 	}
 	SetPosition(pos);
-	mSize[1] = static_cast<int>(pos.y - PaddleH / 2);
-
 }
 
 void Paddle::ProcessKeyboard(const uint8_t* state)

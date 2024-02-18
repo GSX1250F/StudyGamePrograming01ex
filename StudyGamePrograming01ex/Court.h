@@ -9,9 +9,11 @@ public:
 	~Court() {};
 
 private:
-	int thickness;
-	int mColor[4];
-	int mSize[4];
+	const int thickness = 15;
+	int mColor[4] = {200,200,200,255};
 	Vector2 mOffset;
+	int mWallWidth;
+	int mWallHeight;
+
 };
 

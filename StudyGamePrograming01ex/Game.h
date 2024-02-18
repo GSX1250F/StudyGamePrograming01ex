@@ -5,7 +5,6 @@
 #include <vector>
 #include "Actor.h"
 #include "SpriteComponent.h"
-#include "Court.h"
 
 class Game
 {
@@ -47,4 +46,8 @@ private:
 	// アクターが更新中か
 	bool mIsUpdatingActors;
 
+	// 使用するアクターの宣言
+	class Court* mCourt; 
+	class Paddle* mPaddle;
+	class Ball* mBall;
 };

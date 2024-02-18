@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Court.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -31,12 +32,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Court.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="RectSpriteComponent.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SpriteComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

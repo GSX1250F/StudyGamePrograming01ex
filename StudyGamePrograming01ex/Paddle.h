@@ -11,17 +11,11 @@ public:
 	void ProcessKeyboard(const uint8_t* state);
 
 private:
-	int thickness;
-	int mColor[4];
-	int mSize[4];
-	int PaddleH;
-	int PaddleSpeed;
-	int PaddleDir;
-	// 複数のPaddleの情報をカプセル化する配列
-	struct PaddleInfo
-	{
-		Vector2 mPosition;
-	};
-	std::vector<PaddleInfo> mPaddles;
+	const int thickness = 15;
+	int mColor[4] = {255,255,255,255};
+	Vector2 mOffset;
+	const int PaddleH = 200;
+	const int PaddleSpeed = 400;
+	int PaddleDir=0;
 };
 

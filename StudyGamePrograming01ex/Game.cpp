@@ -4,6 +4,8 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include "Court.h"
+#include "Paddle.h"
+#include "Ball.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -83,8 +85,8 @@ void Game::ProcessInput()
 		mIsRunning = false;
 	}
 
-	// ‰F’ˆ‘D‚Ì‘€ì
-	//mShip->ProcessKeyboard(state);
+	// ƒpƒhƒ‹‚Ì‘€ì
+	mPaddle->ProcessKeyboard(state);
 }
 	
 
@@ -153,10 +155,9 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	Court* mCourt;
 	mCourt = new Court(this);
-
-
+	mPaddle = new Paddle(this);
+	mBall = new Ball(this);
 }
 
 void Game::UnloadData()
