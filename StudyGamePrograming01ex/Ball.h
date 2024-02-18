@@ -13,8 +13,7 @@ private:
 	const int thickness = 15;
 	int mColor[4] = { 255,255,255,255 };
 	Vector2 mOffset;
-	Vector2 mBallSpeed;
-	Vector2 mBallDir;
-
+	float mBallSpeed = 200.0f;
+	Vector2 mBallVel;
 };
 
