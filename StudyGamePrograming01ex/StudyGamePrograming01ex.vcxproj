@@ -39,7 +39,6 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="RectSpriteComponent.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SpriteComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -21,6 +21,12 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 
 	SDL_Texture* GetTexture(const std::string& fileName);
+
+	// 使用するアクターの宣言
+	class Court* mCourt;
+	class Paddle* mPaddle;
+	class Ball* mBall;
+
 private:
 	void ProcessInput();
 	void UpdateGame();
@@ -46,8 +52,5 @@ private:
 	// アクターが更新中か
 	bool mIsUpdatingActors;
 
-	// 使用するアクターの宣言
-	class Court* mCourt; 
-	class Paddle* mPaddle;
-	class Ball* mBall;
+	
 };

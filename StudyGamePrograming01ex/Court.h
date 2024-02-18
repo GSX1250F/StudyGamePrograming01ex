@@ -7,6 +7,7 @@ class Court : public Actor
 public:
 	Court(class Game* game);
 	~Court() {};
+	int GetThickness() { return thickness; }
 
 private:
 	const int thickness = 15;

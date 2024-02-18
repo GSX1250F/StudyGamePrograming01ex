@@ -87,6 +87,10 @@ void Game::ProcessInput()
 
 	// パドルの操作
 	mPaddle->ProcessKeyboard(state);
+
+	// ボールの操作(リセット)
+	mBall->ProcessKeyboard(state);
+
 }
 	
 

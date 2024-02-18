@@ -35,6 +35,7 @@ Court::Court(Game* game) : Actor(game)
 	rsc->SetRectColor(mColor);
 	rsc->SetRectSize(mOffset, mWallWidth, mWallHeight);
 
+	/*
 	//左壁（テスト用）
 	mOffset.x = static_cast<int>(-1024 / 2 );
 	mOffset.y = static_cast<int>(-768 / 2);;
@@ -43,7 +44,7 @@ Court::Court(Game* game) : Actor(game)
 	rsc = new RectSpriteComponent(this);
 	rsc->SetRectColor(mColor);
 	rsc->SetRectSize(mOffset, mWallWidth, mWallHeight);
-
+	*/
 
 
 }

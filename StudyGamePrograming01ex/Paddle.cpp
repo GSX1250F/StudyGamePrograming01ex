@@ -45,7 +45,7 @@ void Paddle::ProcessKeyboard(const uint8_t* state)
 	{
 		PaddleDir -= 1;
 	}
-	if (state[SDL_SCANCODE_A])
+	else if (state[SDL_SCANCODE_A])
 	{
 		PaddleDir += 1;
 	}

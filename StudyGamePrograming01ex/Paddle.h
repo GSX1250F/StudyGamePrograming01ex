@@ -9,6 +9,11 @@ public:
 
 	void UpdateActor(float deltaTime) override;
 	void ProcessKeyboard(const uint8_t* state);
+	int GetThickness() { return thickness; }
+	int GetPaddleH() { return PaddleH; }
+	int GetPaddleSpeed() { return PaddleSpeed; }
+	int GetPaddleDir() { return PaddleDir; }
+	
 
 private:
 	const int thickness = 15;
