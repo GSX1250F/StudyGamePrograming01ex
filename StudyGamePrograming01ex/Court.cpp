@@ -3,8 +3,6 @@
 
 Court::Court(Game* game) : Actor(game)
 {
-	mOffset[0] = 0;
-	mOffset[1] = 0;
 	thickness = 15;		//厚さ
 	//色
 	mColor[0] = 200;	//R
@@ -12,56 +10,52 @@ Court::Court(Game* game) : Actor(game)
 	mColor[2] = 200;	//B
 	mColor[3] = 255;	//A
 
+	SetPosition(Vector2(1024/2 , 768/2));	//位置は中心
+
+	// Actorの中心位置から壁ごとの中心のオフセットをx,y方向それぞれに設定。
 	//右壁
-	mSize[0] = 1024 - thickness;	//x
-	mSize[1] = 0;					//y
-	mSize[2] = thickness;			//width
-	mSize[3] = 768;					//height
+	mOffset.x = 1024 / 2 - thickness;
+	mOffset.y = 0;
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	RectSpriteComponent* rsc = new RectSpriteComponent(this);
 
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mSize);
+	rsc->SetRectOffset(mOffset);
 	rsc->SetRectInfos();
 
 	//上壁
-	mSize[0] = 0;					//x
-	mSize[1] = 0;					//y
-	mSize[2] = 1024;				//width
-	mSize[3] = thickness;			//height
+	mOffset.x = 0;
+	mOffset.y = -768/2 + thickness;
+	
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	rsc = new RectSpriteComponent(this);
 
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mSize);
+	rsc->SetRectOffset(mOffset);
 	rsc->SetRectInfos();
 
 	//下壁
-	mSize[0] = 0;					//x
-	mSize[1] = 768 - thickness;		//y
-	mSize[2] = 1024;				//width
-	mSize[3] = thickness;			//height
+	mOffset.x = 0;
+	mOffset.y = 768 / 2 + thickness;
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	rsc = new RectSpriteComponent(this);
 
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mSize);
+	rsc->SetRectOffset(mOffset);
 	rsc->SetRectInfos();
 
 	//左壁（テスト用）
-	mSize[0] = 0;					//x
-	mSize[1] = 0;		//y
-	mSize[2] = thickness;				//width
-	mSize[3] = 768;			//height
+	mOffset.x = -1024/2+thickness;
+	mOffset.y = 0;
 
 	//SpriteComponentのDrawをオーバーライドする描画用コンポーネント
 	rsc = new RectSpriteComponent(this);
 
 	rsc->SetRectColor(mColor);
-	rsc->SetRectSize(mSize);
+	rsc->SetRectOffset(mOffset);
 	rsc->SetRectInfos();
 
 

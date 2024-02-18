@@ -12,5 +12,6 @@ private:
 	int thickness;
 	int mColor[4];
 	int mSize[4];
+	Vector2 mOffset;
 };
 

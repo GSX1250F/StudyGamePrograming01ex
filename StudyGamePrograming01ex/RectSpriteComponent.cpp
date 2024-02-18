@@ -3,6 +3,7 @@
 
 RectSpriteComponent::RectSpriteComponent(class Actor* owner, int drawOrder) : SpriteComponent(owner, drawOrder)
 {
+	
 	for (int i = 0; i < 4; i++) 
 	{
 		mRectColor[i] = 0; 
@@ -29,35 +30,26 @@ void RectSpriteComponent::Draw(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, mRectColor[0], mRectColor[1], mRectColor[2], mRectColor[3]);
 
 	SDL_Rect r;
-	r.x = static_cast<int>(mRectSize[0]);
-	r.y = static_cast<int>(mRectSize[1]);
-	r.w = static_cast<int>(mRectSize[2]);
-	r.h = static_cast<int>(mRectSize[3]);
+	r.x = static_cast<int>(mOwner->GetPosition().x + mRectOffset.x);
+	r.y = static_cast<int>(mOwner->GetPosition().x + mRectOffset.x);
+	r.w = static_cast<int>(mTexWidth * mOwner->GetScale());
+	r.h = static_cast<int>(mTexHeight * mOwner->GetScale());
 
 	//ì¬‚µ‚½’·•ûŒ`‚ğ•`‰æi“h‚è‚Â‚Ô‚µj
 	SDL_RenderFillRect(renderer, &r);
 
 }
 
-
-
-void RectSpriteComponent::SetRectColor(int rectcolor[4])
-{
-	for (int i = 0; i < 4; i++) { mRectColor[i] = rectcolor[i]; }
-}
-
-void RectSpriteComponent::SetRectSize(int rectsize[4])
-{
-	for (int i = 0; i < 4; i++) { mRectSize[i] = rectsize[i]; }
-}
-
-void RectSpriteComponent::SetRectInfos()
+void RectSpriteComponent::SetRectInfos(int rectcolor[4],Vector2 rectoffset,int texwidth,int texheight)
 {
 	RectInfo temp;
 	for (int i = 0; i < 4; i++) 
 	{
-		temp.mRectColor[i] = mRectColor[i]; 
-		temp.mRectSize[i] = mRectSize[i]; 
+		temp.mRectColor[i] = rectcolor[i]; 
+		temp.mRectOffset.x = rectoffset.x; 
+		temp.mRectOffset.y = rectoffset.y;
+		temp.mTexWidth = texwidth;
+		temp.mTexHeight = texheight;
 	};
 	mRectInfos.emplace_back(temp);
 }
